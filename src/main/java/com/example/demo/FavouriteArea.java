@@ -4,7 +4,7 @@ public class FavouriteArea {
 	private String driverName;
 	private String source;
 
-	public FavouriteArea(String driverName , String source){
+	public FavouriteArea(String source , String driverName){
 		this.driverName = driverName;
 		this.source = source;
 	}

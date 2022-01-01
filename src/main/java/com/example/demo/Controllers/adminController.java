@@ -1,10 +1,9 @@
 package com.example.demo.Controllers;
 
+import com.example.demo.DemoApplication;
 import com.example.demo.Database.Database;
 import com.example.demo.inputClasses.adminInput;
 import com.example.demo.systemUsers.Admin;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,15 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 public class adminController {
 
-	@Autowired
-	Database data;
+	
 
 	Admin admin = new Admin("Ahmed", "1231451",  "Ahmed@gmail.com",  "123456");
 	
 	@PostMapping("/verifyDriver")
 	public String verifyDriver(@RequestBody adminInput input) {
-
-		return admin.verifydriverRegistration(input.username);
+		 return admin.verifydriverRegistration(input.username);
 	}
 
 	@PostMapping("/suspend")

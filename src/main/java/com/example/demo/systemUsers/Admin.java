@@ -1,8 +1,6 @@
 package com.example.demo.systemUsers;
 
-import com.example.demo.Database.Database;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.ApplicationHandler;
 
 public class Admin extends User {
 
@@ -13,15 +11,15 @@ public class Admin extends User {
 	}
 
 	public String verifydriverRegistration(String username) {
-		return data.verifydriverRegistration(username);
+		 return ApplicationHandler.getData().verifydriverRegistration(username);
 	}
 
 	public String suspend(String username){
-		return data.suspend(username);
+		return ApplicationHandler.getData().suspend(username);
 	}
 
 	public String unsuspend(String username) {
-		return data.unsuspend(username);
+		return ApplicationHandler.getData().unsuspend(username);
 	}
 
 }

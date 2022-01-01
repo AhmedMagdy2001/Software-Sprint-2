@@ -1,9 +1,5 @@
 package com.example.demo.systemUsers;
 
-import com.example.demo.Database.ArrayStorage;
-import com.example.demo.Database.Database;
-
-import org.springframework.beans.factory.annotation.Autowired;
 
 public class User {
 
@@ -13,8 +9,6 @@ public class User {
 	private String Password = "";
 	private boolean suspended = false;
 
-	@Autowired
-	ArrayStorage data;
 
 
 	public User(String username, String mobileNumber, String email, String password) {

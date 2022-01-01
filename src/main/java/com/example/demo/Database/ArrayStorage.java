@@ -1,5 +1,6 @@
 package com.example.demo.Database;
 import java.util.ArrayList;
+
 import com.example.demo.FavouriteArea;
 import com.example.demo.Rate;
 import com.example.demo.Ride;
@@ -8,17 +9,16 @@ import com.example.demo.systemUsers.Driver;
 import com.example.demo.systemUsers.Passenger;
 
 
-import org.springframework.stereotype.Component;
 
-@Component
 public class ArrayStorage implements Database {
 
-	// private ArrayList<Driver> PendingRegistrations = new ArrayList<Driver>();
+
 	private ArrayList<Driver> drivers = new ArrayList<Driver>();
 	private ArrayList<Passenger> passengers = new ArrayList<Passenger>();
 	private ArrayList<Rate> Ratings = new ArrayList<Rate>();
 	private ArrayList<Ride> Rides = new ArrayList<Ride>();
 	private ArrayList<FavouriteArea> FavAreas = new ArrayList<FavouriteArea>();
+    
 
 	public void addRating(Rate rating) {
 		this.Ratings.add(rating);
@@ -31,17 +31,8 @@ public class ArrayStorage implements Database {
 	public String addFavArea(FavouriteArea favArea) {
 		this.FavAreas.add(favArea);
 
-		return "added " +this.FavAreas.get(0)+" to your favourite areas";
+		return "added " +favArea.getSource()+" to your favourite areas";
 	}
-	/*
-	 * public void addNewDriver(Driver driver) {
-	 * this.PendingRegistrations.add(driver);
-	 * }
-	 * 
-	 * public ArrayList<Driver> getPendingRegistrations() {
-	 * return PendingRegistrations;
-	 * }
-	 */
 
 	public ArrayList<Rate> getRatings() {
 		return Ratings;
@@ -50,13 +41,14 @@ public class ArrayStorage implements Database {
 	public ArrayList<Ride> getRides() {
 		return Rides;
 	}
-
+	
 	public ArrayList<FavouriteArea> getFavAreas() {
 		return FavAreas;
 	}
 
 	public String login(LoginInput credintials) {
 
+	
 		for (int i = 0; i < passengers.size(); i++) {
 			if (passengers.get(i).getUsername().equals(credintials.username)
 					&& passengers.get(i).getPassword().equals(credintials.password)) {
@@ -89,7 +81,7 @@ public class ArrayStorage implements Database {
 
 		return null;
 	}
-
+	
 	public Passenger getPassengerByUsername(String username) {
 		for (int i = 0; i < passengers.size(); i++) {
 			if (passengers.get(i).getUsername().equals(username)) {
@@ -148,10 +140,10 @@ public class ArrayStorage implements Database {
 
 	public void listAllRides() {
 		for (int i = 0; i < passengers.size(); i++) {
-			Passenger passenger = passengers.get(i);
-			if (passenger.getRide() != null) {
-				System.out.println("Passenger:" + passenger.getUsername() + " has requested a ride from "
-						+ passenger.getRide().getSource() + " to " + passenger.getRide().getDestination());
+			
+			if (passengers.get(i).getRide() != null) {
+				System.out.println( passengers.get(i).getUsername() + " has requested a ride from "
+						+ passengers.get(i).getRide().getSource() + " to " + passengers.get(i).getRide().getDestination());
 			}
 
 		}
@@ -161,10 +153,10 @@ public class ArrayStorage implements Database {
 
 		for (int i = 0; i < passengers.size(); i++) {
 
-			Passenger passenger = passengers.get(i);
-			if (passenger.getRide().getSource().equals(source)) {
+			
+			if (passengers.get(i).getRide().getSource().equals(source)) {
 
-				passenger.getRide().setPrice(price, driverName);
+				passengers.get(i).getRide().setPrice(price, driverName);
 			}
 
 		}
