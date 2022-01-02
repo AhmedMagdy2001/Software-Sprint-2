@@ -49,7 +49,7 @@ public interface Database {
 
 	public void listAllRides();
 
-	public String suggestRidePrice(String source, int price, String driverName , String passengerName);
+	public String suggestRidePrice(String source, double price , String passengerName);
 
 	void listUsersRatings(Driver driver);
 
@@ -61,4 +61,7 @@ public interface Database {
 
 	public void listSuspendedUsers();
 
+	public boolean checkDiscountedDestination(String destination);
+
+	public void addDiscountedDestination(String destination);
 }

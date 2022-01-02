@@ -35,6 +35,7 @@ public class passengerController {
 
       Passenger passenger = ApplicationHandler.getData().getPassengerByUsername(credintials.passengerUsername);
 
+      
       return passenger.getRide();
    }
 

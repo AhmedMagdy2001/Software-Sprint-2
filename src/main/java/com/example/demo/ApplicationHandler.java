@@ -95,8 +95,8 @@ public class ApplicationHandler {
         database.listAllRides();
     }
 
-	public String suggestRidePrice(String source, int price, String driverName ,String passengerName){
-        return database.suggestRidePrice(source, price, driverName,  passengerName);
+	public String suggestRidePrice(String source, double price ,String passengerName){
+        return database.suggestRidePrice(source, price,  passengerName);
     }
 
 	public void listUsersRatings(Driver driver){
@@ -118,4 +118,13 @@ public class ApplicationHandler {
 	public void listSuspendedUsers(){
         database.listSuspendedUsers();
     }
+
+    public boolean checkDiscountedDestination(String destination) {
+		return database.checkDiscountedDestination(destination);
+	}
+
+	public void addDiscountedDestination(String destination) {
+		database.addDiscountedDestination(destination); 
+	}
+
 }

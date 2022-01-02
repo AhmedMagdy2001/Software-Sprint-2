@@ -8,7 +8,7 @@ public class User {
 	private String email = "";
 	private String Password = "";
 	private boolean suspended = false;
-
+    
 
 
 	public User(String username, String mobileNumber, String email, String password) {

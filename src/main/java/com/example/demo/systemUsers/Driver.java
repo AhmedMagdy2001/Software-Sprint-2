@@ -16,7 +16,7 @@ public class Driver extends User {
 	private String NationalId = "";
 	private boolean verified = false;
 	private boolean available = true;
-    private Ride ride = null;
+
 	
 	public Driver(String username, String mobileNumber, String email, String password,
 			String drivingLicense, String nationalId) {
@@ -36,9 +36,9 @@ public class Driver extends User {
 		ApplicationHandler.getData().listAllRides();
 	}
 
-	public String suggestPrice(String source , String passengerName, int price) {
+	public String suggestPrice(String source , String passengerName, double price) {
 
-		return ApplicationHandler.getData().suggestRidePrice(source, price, this.getUsername(), passengerName);
+		return ApplicationHandler.getData().suggestRidePrice(source, price,  passengerName);
 	}
 	public void listRatings() {
 		ApplicationHandler.getData().listUsersRatings(this);

@@ -5,7 +5,7 @@ public class Ride {
 	
 	private String source;
 	private String destination;
-	private int price = 0;
+	private dobule price = 0;
 	private String driverName;
 	private boolean accepted = false;
 	private boolean completed;
@@ -36,11 +36,11 @@ public class Ride {
 		this.destination = destination;
 	}
 
-	public int getPrice() {
+	public float getPrice() {
 		return price;
 	}
 
-	public void setPrice(int price, String driverName) {
+	public void setPrice(double price, String driverName) {
 		this.price = price;
 		this.driverName = driverName;
 	}

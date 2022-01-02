@@ -34,5 +34,10 @@ public class adminController {
 		return admin.unsuspend(input.username);
 	}
 
+	@PostMapping("/addDiscount")
+	public void addDiscount(@RequestBody adminInput input){
+		admin.addDiscount(input.area);
+	}
+
 
 }

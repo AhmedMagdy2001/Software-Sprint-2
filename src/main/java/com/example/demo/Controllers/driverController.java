@@ -33,6 +33,10 @@ public class driverController {
     @PostMapping("/suggestPrice")
     public String suggestPrice(@RequestBody driverInput input) {
        Driver driver = ApplicationHandler.getData().getDriverByUsername(input.driverUsername);
+
+       if(ApplicationHandler.getData().checkDiscountedDestination(input.destination)){
+          input.price =  input.price - (input.price * 0.1) ;
+       }
       return driver.suggestPrice(input.source,input.passengerUsername,input.price);
 
    }

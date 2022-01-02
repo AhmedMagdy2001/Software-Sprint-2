@@ -22,4 +22,7 @@ public class Admin extends User {
 		return ApplicationHandler.getData().unsuspend(username);
 	}
 
+	public void addDiscount(String destination ){
+		ApplicationHandler.getData().addDiscountedDestination(destination);
+	}
 }

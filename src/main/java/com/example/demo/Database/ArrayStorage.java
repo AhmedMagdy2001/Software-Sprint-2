@@ -18,8 +18,9 @@ public class ArrayStorage implements Database {
 	private ArrayList<Rate> Ratings = new ArrayList<Rate>();
 	private ArrayList<Ride> Rides = new ArrayList<Ride>();
 	private ArrayList<FavouriteArea> FavAreas = new ArrayList<FavouriteArea>();
-    
+    private ArrayList<String> DiscountedDestinations = new ArrayList<String>(); 
 
+	
 	public void addRating(Rate rating) {
 		this.Ratings.add(rating);
 	}
@@ -150,14 +151,14 @@ public class ArrayStorage implements Database {
 		}
 	}
 
-	public String suggestRidePrice(String source, int price, String driverName , String passengerName) {
+	public String suggestRidePrice(String source, double price , String passengerName) {
 
 		for (int i = 0; i < passengers.size(); i++) {
 
 			if (passengers.get(i).getRide().getSource().equals(source)&&passengers.get(i).getUsername().equals(passengerName) &&
 			                                                                                        !passengers.get(i).getRide().isAccepted()) {
 
-				passengers.get(i).getRide().setPrice(price, driverName);
+				passengers.get(i).getRide().setPrice(price);
 			}
 			else if(passengers.get(i).getRide().isAccepted()){
 				return "this ride is already taken by another driver";
@@ -299,6 +300,19 @@ public class ArrayStorage implements Database {
 			}
 
 		}
+	}
+
+	public boolean checkDiscountedDestination(String destination) {
+		for(int i = 0 ; i < DiscountedDestinations.size();i++){
+			if(DiscountedDestinations.get(i).equals(destination)){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void addDiscountedDestination(String destination) {
+		DiscountedDestinations.add(destination); 
 	}
 
 	
