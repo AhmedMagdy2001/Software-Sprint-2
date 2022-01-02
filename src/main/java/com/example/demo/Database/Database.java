@@ -1,6 +1,7 @@
 package com.example.demo.Database;
 import java.util.ArrayList;
 
+import com.example.demo.Actions;
 import com.example.demo.FavouriteArea;
 import com.example.demo.Rate;
 import com.example.demo.Ride;
@@ -10,7 +11,7 @@ import com.example.demo.systemUsers.Passenger;
 
 public interface Database {
 
-	public void addRide(Ride ride);
+	public void addRide(Ride ride ,  Passenger passenger);
 
 	public void addRating(Rate rating);
 
@@ -47,11 +48,11 @@ public interface Database {
 
 	public void listDrivers();
 
-	public void listAllRides();
+	public ArrayList<String> listAllRides();
 
-	public String suggestRidePrice(String source, double price , String passengerName);
+	public String suggestRidePrice(String source, double price, String driverName , String passengerName);
 
-	void listUsersRatings(Driver driver);
+	ArrayList<String> listUsersRatings(Driver driver);
 
 	String checkDriverAvgRating(String driverName);
 
@@ -64,4 +65,6 @@ public interface Database {
 	public boolean checkDiscountedDestination(String destination);
 
 	public void addDiscountedDestination(String destination);
+	
+	public ArrayList<Actions> getRideActions(String passengerName,String source );
 }

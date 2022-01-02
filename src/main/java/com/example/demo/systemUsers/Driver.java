@@ -1,7 +1,10 @@
 package com.example.demo.systemUsers;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
+import com.example.demo.Actions;
 import com.example.demo.ApplicationHandler;
 import com.example.demo.FavouriteArea;
 import com.example.demo.Ride;
@@ -16,7 +19,7 @@ public class Driver extends User {
 	private String NationalId = "";
 	private boolean verified = false;
 	private boolean available = true;
-
+    
 	
 	public Driver(String username, String mobileNumber, String email, String password,
 			String drivingLicense, String nationalId) {
@@ -32,16 +35,16 @@ public class Driver extends User {
 
 	}
 
-	public void listAllRides() {
-		ApplicationHandler.getData().listAllRides();
+	public ArrayList<String> listAllRides() {
+		return ApplicationHandler.getData().listAllRides();
 	}
 
 	public String suggestPrice(String source , String passengerName, double price) {
 
-		return ApplicationHandler.getData().suggestRidePrice(source, price,  passengerName);
+		return ApplicationHandler.getData().suggestRidePrice(source, price, this.getUsername(), passengerName);
 	}
-	public void listRatings() {
-		ApplicationHandler.getData().listUsersRatings(this);
+	public ArrayList<String> listRatings() {
+		return ApplicationHandler.getData().listUsersRatings(this);
 	}
 
 	public String getDrivingLicense() {

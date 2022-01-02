@@ -1,5 +1,8 @@
 package com.example.demo.systemUsers;
 
+import java.util.ArrayList;
+
+import com.example.demo.Actions;
 import com.example.demo.ApplicationHandler;
 
 public class Admin extends User {
@@ -24,5 +27,11 @@ public class Admin extends User {
 
 	public void addDiscount(String destination ){
 		ApplicationHandler.getData().addDiscountedDestination(destination);
+	}
+	public ArrayList<Actions> showRideActions (String passengerName,String source)
+	{
+		return ApplicationHandler.getData().getRideActions(passengerName, source);
+
+
 	}
 }

@@ -1,23 +1,38 @@
 package com.example.demo;
 
+import java.util.ArrayList;
+
 public class Ride {
 
 	
 	private String source;
 	private String destination;
-	private dobule price = 0;
+	private double price = 0;
 	private String driverName;
 	private boolean accepted = false;
 	private boolean completed;
+	private int maxNumOfPassengers;
+    private int servicedPassengers = 0;
+	private ArrayList<Actions> actions = new ArrayList<>();
 
-	public void setPrice(int price) {
+
+	
+	public ArrayList<Actions> getActions() {
+		return actions;
+	}
+
+	public void addAction(Actions action) {
+		actions.add(action);
+	}
+	
+	public void setPrice(double price) {
 		this.price = price;
 	}
 
-	public Ride(String source, String destination) {
+	public Ride(String source, String destination,int maxNumOfPassengers) {
 		this.source = source;
 		this.destination = destination;
-
+        this.maxNumOfPassengers = maxNumOfPassengers;
 	}
 
 	public String getSource() {
@@ -36,7 +51,7 @@ public class Ride {
 		this.destination = destination;
 	}
 
-	public float getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
@@ -69,5 +84,20 @@ public class Ride {
 		this.accepted = accepted;
 		ApplicationHandler.getData().unNotifyDrivers(this);
 	}
+	public int getMaxNumberOfPassengers() {
+		return maxNumOfPassengers;
+	}
+
+	public void setNumberOfPassengers(int maxNumOfPassengers) {
+		this.maxNumOfPassengers = maxNumOfPassengers;
+	}
+	public int getServicedPassengers() {
+		return servicedPassengers;
+	}
+
+	public void increaseServicedPassengers() {
+		this.servicedPassengers++;
+	}
+
 
 }

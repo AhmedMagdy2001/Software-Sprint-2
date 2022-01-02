@@ -1,6 +1,8 @@
 package com.example.demo.inputClasses;
 
 public class adminInput {
-    public String username;
     public String area;
+    public String driverUsername;
+    public String passengerUsername;
+    public String source;
 }

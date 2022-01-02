@@ -1,6 +1,7 @@
 package com.example.demo.Database;
 import java.util.ArrayList;
 
+import com.example.demo.Actions;
 import com.example.demo.FavouriteArea;
 import com.example.demo.Rate;
 import com.example.demo.Ride;
@@ -25,8 +26,31 @@ public class ArrayStorage implements Database {
 		this.Ratings.add(rating);
 	}
 
-	public void addRide(Ride ride) {
-		this.Rides.add(ride);
+	public void addRide(Ride ride , Passenger passenger ) {
+
+		for(int i = 0 ; i < Rides.size(); i++) { 
+
+			if(ride.getSource().equals(Rides.get(i).getSource())&& ride.getDestination().equals(Rides.get(i).getDestination())){
+				if(ride.getMaxNumberOfPassengers() > Rides.get(i).getServicedPassengers() && Rides.get(i).getMaxNumberOfPassengers() > ride.getServicedPassengers()){
+
+                     Rides.get(i).increaseServicedPassengers();
+                     passenger.getRide().increaseServicedPassengers();
+					 return;
+				}
+			}
+		}
+		Rides.add(ride);
+	}
+
+	public ArrayList<Actions> getRideActions(String passengerName,String source )
+	{
+		for (Passenger p : passengers) {
+			if(p.getUsername().equals(passengerName)&&p.getRide().getSource().equals(source))
+			{
+				return p.getRide().getActions();
+			}
+		}
+		return null ;
 	}
 
 	public String addFavArea(FavouriteArea favArea) {
@@ -139,26 +163,29 @@ public class ArrayStorage implements Database {
 		}
 	}
 
-	public void listAllRides() {
+	public ArrayList<String> listAllRides() {
+		ArrayList<String> allRides = new ArrayList<String>();
+
 		for (int i = 0; i < passengers.size(); i++) {
 			
 			if (passengers.get(i).getRide() != null && !passengers.get(i).getRide().isAccepted()) {
-				System.out.println( passengers.get(i).getUsername() + " has requested a ride from "
+				allRides.add(passengers.get(i).getUsername() + " has requested a ride from "
 						+ passengers.get(i).getRide().getSource() + " to " + passengers.get(i).getRide().getDestination());
 			}
 			
 
 		}
+		return allRides;
 	}
 
-	public String suggestRidePrice(String source, double price , String passengerName) {
+	public String suggestRidePrice(String source, double price, String driverName , String passengerName) {
 
 		for (int i = 0; i < passengers.size(); i++) {
 
 			if (passengers.get(i).getRide().getSource().equals(source)&&passengers.get(i).getUsername().equals(passengerName) &&
 			                                                                                        !passengers.get(i).getRide().isAccepted()) {
 
-				passengers.get(i).getRide().setPrice(price);
+				passengers.get(i).getRide().setPrice(price, driverName);
 			}
 			else if(passengers.get(i).getRide().isAccepted()){
 				return "this ride is already taken by another driver";
@@ -169,17 +196,19 @@ public class ArrayStorage implements Database {
 
 	}
 
-	public void listUsersRatings(Driver driver) {
-
+	public ArrayList<String>  listUsersRatings(Driver driver) {
+        ArrayList<String> usersRatings = new ArrayList<String>();
+		
 		for (int i = 0; i < this.Ratings.size(); i++) {
 
 			if (this.Ratings.get(i).getDriverName().equals(driver.getUsername())) {
-				System.out.println("Passenger: " + this.Ratings.get(i).getPassengerName() + "-> Rate: "
+			usersRatings.add("Passenger: " + this.Ratings.get(i).getPassengerName() + "-> Rate: "
 						+ this.Ratings.get(i).getRate());
 
 			}
 
 		}
+		return usersRatings;
 
 	}
 

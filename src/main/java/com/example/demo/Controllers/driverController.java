@@ -1,6 +1,10 @@
 package com.example.demo.Controllers;
-import java.util.ArrayList;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+
+import com.example.demo.Actions;
 import com.example.demo.ApplicationHandler;
 import com.example.demo.FavouriteArea;
 import com.example.demo.Ride;
@@ -15,53 +19,71 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 @RequestMapping("/driver")
 
 public class driverController {
-        
-   
 
    @PostMapping("/addFavouriteArea")
-     public String addFavouriteArea(@RequestBody driverInput input) {
-        Driver driver = ApplicationHandler.getData().getDriverByUsername(input.driverUsername);
+   public String addFavouriteArea(@RequestBody driverInput input) {
+      Driver driver = ApplicationHandler.getData().getDriverByUsername(input.driverUsername);
 
-        return driver.addFavArea(input.source);
-	 }
+      return driver.addFavArea(input.source);
+   }
 
-    @PostMapping("/suggestPrice")
-    public String suggestPrice(@RequestBody driverInput input) {
-       Driver driver = ApplicationHandler.getData().getDriverByUsername(input.driverUsername);
+   @PostMapping("/suggestPrice")
+   public String suggestPrice(@RequestBody driverInput input) {
+      Driver driver = ApplicationHandler.getData().getDriverByUsername(input.driverUsername);
 
-       if(ApplicationHandler.getData().checkDiscountedDestination(input.destination)){
-          input.price =  input.price - (input.price * 0.1) ;
-       }
-      return driver.suggestPrice(input.source,input.passengerUsername,input.price);
+      Actions action = new Actions("putPrice",
+            new SimpleDateFormat("E yyyy.MM.dd 'at' hh:mm:ss a zzz").format(Calendar.getInstance().getTime()));
+      action.setDriverName(input.driverUsername);
+      action.setPrice(input.price);
+
+      ApplicationHandler.getData().getPassengerByUsername(input.passengerUsername).getRide().addAction(action);
+
+      return driver.suggestPrice(input.source, input.passengerUsername, input.price);
 
    }
+
+   @PostMapping("/arriveAtSource")
+   public void arriveAtSource(@RequestBody driverInput input) {
+      Passenger passenger = ApplicationHandler.getData().getPassengerByUsername(input.passengerUsername);
+
+      Actions action = new Actions("arrivedAtSource",
+            new SimpleDateFormat("E yyyy.MM.dd 'at' hh:mm:ss a zzz").format(Calendar.getInstance().getTime()));
+      action.setDriverName(input.driverUsername);
+      action.setPassengerName(input.passengerUsername);
+      passenger.getRide().addAction(action);
+   }
+   
    @PostMapping("/completeRide")
-    public void completeRide(@RequestBody driverInput input) {
-       Driver driver = ApplicationHandler.getData().getDriverByUsername(input.driverUsername);
-       driver.setAvailable(true);
-       
+   public void completeRide(@RequestBody driverInput input) {
+      Driver driver = ApplicationHandler.getData().getDriverByUsername(input.driverUsername);
+      Passenger passenger = ApplicationHandler.getData().getPassengerByUsername(input.passengerUsername);
+
+      driver.setAvailable(true);
+      Actions action = new Actions("arrivedAtDestination",
+            new SimpleDateFormat("E yyyy.MM.dd 'at' hh:mm:ss a zzz").format(Calendar.getInstance().getTime()));
+      action.setDriverName(input.driverUsername);
+      action.setPassengerName(input.passengerUsername);
+      passenger.getRide().addAction(action);
+
    }
 
    @GetMapping("/listRatings")
-    public void listRatings(@RequestBody driverInput input) {
-       Driver driver = ApplicationHandler.getData().getDriverByUsername(input.driverUsername);
-       driver.listRatings();
-       
+   public ArrayList<String> listRatings(@RequestBody driverInput input) {
+      Driver driver = ApplicationHandler.getData().getDriverByUsername(input.driverUsername);
+      return driver.listRatings();
+
    }
-    
-    
+
    @GetMapping("/listRides")
-     public void getRides(@RequestBody driverInput input){
-         Driver driver = ApplicationHandler.getData().getDriverByUsername(input.driverUsername);
-         driver.listAllRides();
-     }
-	
-     
-                                                                     
+   public ArrayList<String> getRides(@RequestBody driverInput input) {
+      Driver driver = ApplicationHandler.getData().getDriverByUsername(input.driverUsername);
+      return driver.listAllRides();
+   }
+
+   
 
 }

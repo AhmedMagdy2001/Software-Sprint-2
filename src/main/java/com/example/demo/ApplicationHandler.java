@@ -24,11 +24,13 @@ public class ApplicationHandler {
 		}
 		return application;
 	}
+
     public void setDatabase(Database database) {
         ApplicationHandler.database = database;
     }
-    public void addRide(Ride ride){
-        database.addRide(ride);
+
+    public void addRide(Ride ride , Passenger passenger){
+        database.addRide(ride , passenger);
     };
 
 	public void addRating(Rate rating){
@@ -91,16 +93,16 @@ public class ApplicationHandler {
          database.listDrivers();
     }
 
-	public void listAllRides(){
-        database.listAllRides();
+	public ArrayList<String> listAllRides(){
+        return database.listAllRides();
     }
 
-	public String suggestRidePrice(String source, double price ,String passengerName){
-        return database.suggestRidePrice(source, price,  passengerName);
+	public String suggestRidePrice(String source, double price, String driverName ,String passengerName){
+        return database.suggestRidePrice(source, price, driverName,  passengerName);
     }
 
-	public void listUsersRatings(Driver driver){
-        database.listUsersRatings(driver);
+	public ArrayList<String> listUsersRatings(Driver driver){
+        return database.listUsersRatings(driver);
     }
 
 	public String checkDriverAvgRating(String driverName){
@@ -126,5 +128,9 @@ public class ApplicationHandler {
 	public void addDiscountedDestination(String destination) {
 		database.addDiscountedDestination(destination); 
 	}
+    public ArrayList<Actions> getRideActions(String passengerName,String source )
+    {
+        return database.getRideActions(passengerName, source);
+    }
 
 }

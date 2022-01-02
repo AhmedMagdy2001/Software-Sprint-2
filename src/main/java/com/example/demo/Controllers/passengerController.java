@@ -1,5 +1,9 @@
 package com.example.demo.Controllers;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+import com.example.demo.Actions;
 import com.example.demo.ApplicationHandler;
 import com.example.demo.DemoApplication;
 import com.example.demo.Rate;
@@ -25,8 +29,8 @@ public class passengerController {
    public Ride requestRide(@RequestBody RideInput rideCredintials) {
 
       Passenger passenger = ApplicationHandler.getData().getPassengerByUsername(rideCredintials.passengerUsername);
-      passenger.requestAride(rideCredintials.source, rideCredintials.destination);
-
+      passenger.requestAride(rideCredintials.source, rideCredintials.destination,rideCredintials.maxNumOfPassengers);
+     
       return passenger.getRide();
    }
 
@@ -34,8 +38,18 @@ public class passengerController {
    public Ride checkRideOffer(@RequestBody RideInput credintials) {
 
       Passenger passenger = ApplicationHandler.getData().getPassengerByUsername(credintials.passengerUsername);
+       double newPrice =passenger.getRide().getPrice();
 
-      
+      if(ApplicationHandler.getData().checkDiscountedDestination(passenger.getRide().getDestination())){
+         newPrice =  newPrice- (newPrice* 0.1) ;
+      }
+      if(passenger.isFirstRideDiscountAvailable()){
+         newPrice =  newPrice - (newPrice * 0.1) ;
+      }
+      if(passenger.getRide().getServicedPassengers() >= 2){
+         newPrice =  newPrice- (newPrice * 0.05) ;
+      }
+      passenger.getRide().setPrice(newPrice);
       return passenger.getRide();
    }
 
@@ -45,11 +59,18 @@ public class passengerController {
       Passenger passenger = ApplicationHandler.getData().getPassengerByUsername(credintials.passengerUsername);
       String driverName = passenger.getRide().getDriverName();
       passenger.getRide().setAccepted(true);
-
       ApplicationHandler.getData().unNotifyDrivers(passenger.getRide()); //if ride is accepted we remove it from the requested rides in other drivers
 
       Driver driver = ApplicationHandler.getData().getDriverByUsername(driverName);
+
+      Actions action = new Actions("acceptRide",new SimpleDateFormat("E yyyy.MM.dd 'at' hh:mm:ss a zzz").format(Calendar.getInstance().getTime()));
+      action.setPassengerName(passenger.getUsername());
+      action.setPrice(passenger.getRide().getPrice());
+      passenger.getRide().addAction(action);
+
       driver.setAvailable(false);
+      passenger.didFirstRide(); //got the first ride discount
+      passenger.getRide().increaseServicedPassengers();
 
       return "Ride Accepted";
    }
