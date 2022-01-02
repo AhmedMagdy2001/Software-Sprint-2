@@ -5,13 +5,13 @@ import com.example.demo.Ride;
 
 
 
-public class Passenger extends User {
+public class Passenger extends User implements IPassenger {
 
 	private Ride ride = null;
 	private boolean firstRideDiscount = true;
 
-	public Passenger(String username, String mobileNumber, String email, String password) {
-		super(username, mobileNumber, email, password);
+	public Passenger(String username, String mobileNumber, String email, String password , String birthDate) {
+		super(username, mobileNumber, email, password , birthDate);
 		
 	}
 

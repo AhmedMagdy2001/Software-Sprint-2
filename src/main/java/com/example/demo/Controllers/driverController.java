@@ -36,7 +36,7 @@ public class driverController {
       Driver driver = ApplicationHandler.getData().getDriverByUsername(input.driverUsername);
 
       Actions action = new Actions("putPrice",
-            new SimpleDateFormat("E yyyy.MM.dd 'at' hh:mm:ss a zzz").format(Calendar.getInstance().getTime()));
+            new SimpleDateFormat("d-M").format(Calendar.getInstance().getTime()));
       action.setDriverName(input.driverUsername);
       action.setPrice(input.price);
 
@@ -51,7 +51,7 @@ public class driverController {
       Passenger passenger = ApplicationHandler.getData().getPassengerByUsername(input.passengerUsername);
 
       Actions action = new Actions("arrivedAtSource",
-            new SimpleDateFormat("E yyyy.MM.dd 'at' hh:mm:ss a zzz").format(Calendar.getInstance().getTime()));
+            new SimpleDateFormat("d-M").format(Calendar.getInstance().getTime()));
       action.setDriverName(input.driverUsername);
       action.setPassengerName(input.passengerUsername);
       passenger.getRide().addAction(action);
@@ -64,7 +64,7 @@ public class driverController {
 
       driver.setAvailable(true);
       Actions action = new Actions("arrivedAtDestination",
-            new SimpleDateFormat("E yyyy.MM.dd 'at' hh:mm:ss a zzz").format(Calendar.getInstance().getTime()));
+            new SimpleDateFormat("d-M").format(Calendar.getInstance().getTime()));
       action.setDriverName(input.driverUsername);
       action.setPassengerName(input.passengerUsername);
       passenger.getRide().addAction(action);

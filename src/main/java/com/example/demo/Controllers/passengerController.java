@@ -46,9 +46,16 @@ public class passengerController {
       if(passenger.isFirstRideDiscountAvailable()){
          newPrice =  newPrice - (newPrice * 0.1) ;
       }
+      if(ApplicationHandler.getData().isHoliday(passenger.getRide().getDate())){
+         newPrice =  newPrice - (newPrice * 0.05);
+      }
+      if(passenger.getRide().getDate().equals(passenger.getBirthDate()){
+         newPrice =  newPrice - (newPrice * 0.1);
+      }
       if(passenger.getRide().getServicedPassengers() >= 2){
          newPrice =  newPrice- (newPrice * 0.05) ;
       }
+      
       passenger.getRide().setPrice(newPrice);
       return passenger.getRide();
    }
@@ -63,7 +70,7 @@ public class passengerController {
 
       Driver driver = ApplicationHandler.getData().getDriverByUsername(driverName);
 
-      Actions action = new Actions("acceptRide",new SimpleDateFormat("E yyyy.MM.dd 'at' hh:mm:ss a zzz").format(Calendar.getInstance().getTime()));
+      Actions action = new Actions("acceptRide",new SimpleDateFormat("d-M").format(Calendar.getInstance().getTime()));
       action.setPassengerName(passenger.getUsername());
       action.setPrice(passenger.getRide().getPrice());
       passenger.getRide().addAction(action);

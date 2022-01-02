@@ -1,16 +1,13 @@
 package com.example.demo.systemUsers;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 
-import com.example.demo.Actions;
+import java.util.ArrayList;
 import com.example.demo.ApplicationHandler;
 import com.example.demo.FavouriteArea;
 import com.example.demo.Ride;
-import com.example.demo.inputClasses.driverInput;
 
-public class Driver extends User {
+
+public class Driver extends User implements IDriver {
 
 	public ArrayList<Ride> requestedRides = new ArrayList<Ride>();
 

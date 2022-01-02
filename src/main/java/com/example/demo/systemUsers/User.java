@@ -8,16 +8,17 @@ public class User {
 	private String email = "";
 	private String Password = "";
 	private boolean suspended = false;
-    
+    private String birthDate;
 
 
-	public User(String username, String mobileNumber, String email, String password) {
+	
+	
+	public User(String username, String mobileNumber, String email, String password , String birthDate) {
 		this.username = username;
 		this.mobileNumber = mobileNumber;
 		this.email = email;
 		this.Password = password;
-		
-	
+		this.birthDate = birthDate;
 	}
 
 	public String getUsername() {
@@ -61,6 +62,10 @@ public class User {
 
 	public boolean getSuspend() {
 		return suspended;
+	}
+
+	public String getBirthDate() {
+		return birthDate;
 	}
 	
 

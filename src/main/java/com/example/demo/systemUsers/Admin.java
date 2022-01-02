@@ -9,8 +9,8 @@ public class Admin extends User {
 
 
 	
-	public Admin(String username, String mobileNumber, String email, String password) {
-		super(username, mobileNumber, email, password);
+	public Admin(String username, String mobileNumber, String email, String password , String birthDate) {
+		super(username, mobileNumber, email, password , birthDate);
 	}
 
 	public String verifydriverRegistration(String username) {

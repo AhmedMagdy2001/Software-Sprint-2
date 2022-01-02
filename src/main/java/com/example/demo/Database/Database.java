@@ -67,4 +67,9 @@ public interface Database {
 	public void addDiscountedDestination(String destination);
 	
 	public ArrayList<Actions> getRideActions(String passengerName,String source );
+
+	public void addHolidayDate(String date) ;
+	
+	public boolean isHoliday(String date);
+	
 }
