@@ -17,15 +17,19 @@ public class Passenger extends User {
 	public void requestAride(String source, String destination) {
 		Ride ride = new Ride(source, destination);
 		this.ride = ride;
+		ApplicationHandler.getData().notifyAllDrivers(ride);
 
 	}
 
-	void rateDriver(int rate, String driverName) {
-		Rate rating = new Rate(this.getUsername(), driverName, rate);
+	public void rateDriver(Rate rating) {
+	    
 		ApplicationHandler.getData().addRating(rating);
-
+        
 	}
-
+    
+	public void removeRide(){
+          this.ride = null;
+	}
 	public Ride getRide() {
 		return ride;
 	}

@@ -20,26 +20,40 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/driver")
 
 public class driverController {
+        
+   
 
-
-     @PostMapping("/addFavouriteArea")
+   @PostMapping("/addFavouriteArea")
      public String addFavouriteArea(@RequestBody driverInput input) {
-        Driver driver = ApplicationHandler.getData().getDriverByUsername(input.username);
+        Driver driver = ApplicationHandler.getData().getDriverByUsername(input.driverUsername);
 
         return driver.addFavArea(input.source);
 	 }
 
     @PostMapping("/suggestPrice")
-    public void suggestPrice(@RequestBody driverInput input) {
-       Driver driver = ApplicationHandler.getData().getDriverByUsername(input.username);
+    public String suggestPrice(@RequestBody driverInput input) {
+       Driver driver = ApplicationHandler.getData().getDriverByUsername(input.driverUsername);
+      return driver.suggestPrice(input.source,input.passengerUsername,input.price);
 
-      driver.suggestPrice(input.source,input.price);
+   }
+   @PostMapping("/completeRide")
+    public void completeRide(@RequestBody driverInput input) {
+       Driver driver = ApplicationHandler.getData().getDriverByUsername(input.driverUsername);
+       driver.setAvailable(true);
+       
+   }
+
+   @GetMapping("/listRatings")
+    public void listRatings(@RequestBody driverInput input) {
+       Driver driver = ApplicationHandler.getData().getDriverByUsername(input.driverUsername);
+       driver.listRatings();
+       
    }
     
-
-     @GetMapping("/listRides")
+    
+   @GetMapping("/listRides")
      public void getRides(@RequestBody driverInput input){
-         Driver driver = ApplicationHandler.getData().getDriverByUsername(input.username);
+         Driver driver = ApplicationHandler.getData().getDriverByUsername(input.driverUsername);
          driver.listAllRides();
      }
 	

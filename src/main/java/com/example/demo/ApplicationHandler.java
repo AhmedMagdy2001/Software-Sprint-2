@@ -47,6 +47,14 @@ public class ApplicationHandler {
         return database.addDriver(driver);
     }
 
+    public void notifyAllDrivers(Ride ride){
+        database.notifyAllDrivers(ride);
+    }
+
+    public void unNotifyDrivers(Ride ride){
+        database.unNotifyDrivers(ride);
+    }
+
 	public String login(LoginInput credintials){
         return database.login(credintials);
     }
@@ -87,16 +95,16 @@ public class ApplicationHandler {
         database.listAllRides();
     }
 
-	public void suggestRidePrice(String source, int price, String driverName){
-        database.suggestRidePrice(source, price, driverName);
+	public String suggestRidePrice(String source, int price, String driverName ,String passengerName){
+        return database.suggestRidePrice(source, price, driverName,  passengerName);
     }
 
-	void listUsersRatings(Driver driver){
+	public void listUsersRatings(Driver driver){
         database.listUsersRatings(driver);
     }
 
-	void checkDriverAvgRating(String driverName){
-        database.checkDriverAvgRating(driverName);
+	public String checkDriverAvgRating(String driverName){
+        return database.checkDriverAvgRating(driverName);
     }
 
 	public String suspend(String username){

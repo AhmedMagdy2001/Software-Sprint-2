@@ -141,25 +141,30 @@ public class ArrayStorage implements Database {
 	public void listAllRides() {
 		for (int i = 0; i < passengers.size(); i++) {
 			
-			if (passengers.get(i).getRide() != null) {
+			if (passengers.get(i).getRide() != null && !passengers.get(i).getRide().isAccepted()) {
 				System.out.println( passengers.get(i).getUsername() + " has requested a ride from "
 						+ passengers.get(i).getRide().getSource() + " to " + passengers.get(i).getRide().getDestination());
 			}
+			
 
 		}
 	}
 
-	public void suggestRidePrice(String source, int price, String driverName) {
+	public String suggestRidePrice(String source, int price, String driverName , String passengerName) {
 
 		for (int i = 0; i < passengers.size(); i++) {
 
-			
-			if (passengers.get(i).getRide().getSource().equals(source)) {
+			if (passengers.get(i).getRide().getSource().equals(source)&&passengers.get(i).getUsername().equals(passengerName) &&
+			                                                                                        !passengers.get(i).getRide().isAccepted()) {
 
 				passengers.get(i).getRide().setPrice(price, driverName);
 			}
+			else if(passengers.get(i).getRide().isAccepted()){
+				return "this ride is already taken by another driver";
+			}
 
 		}
+		return null;
 
 	}
 
@@ -168,7 +173,7 @@ public class ArrayStorage implements Database {
 		for (int i = 0; i < this.Ratings.size(); i++) {
 
 			if (this.Ratings.get(i).getDriverName().equals(driver.getUsername())) {
-				System.out.println("Passenger: " + this.Ratings.get(i).getPassengerName() + "|| Rate: "
+				System.out.println("Passenger: " + this.Ratings.get(i).getPassengerName() + "-> Rate: "
 						+ this.Ratings.get(i).getRate());
 
 			}
@@ -177,7 +182,7 @@ public class ArrayStorage implements Database {
 
 	}
 
-	public void checkDriverAvgRating(String driverName) {
+	public String checkDriverAvgRating(String driverName) {
 
 		int average = 0;
 
@@ -189,7 +194,7 @@ public class ArrayStorage implements Database {
 
 		}
 
-		System.out.println(driverName + " got : " + average);
+		return driverName + " got rating: "+String.valueOf(average);
 	}
 
 	public String addPassenger(Passenger passenger) {
@@ -214,6 +219,33 @@ public class ArrayStorage implements Database {
 	}
 		this.drivers.add(driver);
 		return "registeration completed";
+	}
+
+	public void notifyAllDrivers(Ride ride){
+
+		for(int i = 0 ; i< FavAreas.size();i++){
+			if(FavAreas.get(i).getSource().equals(ride.getSource())){
+			 Driver driver = getDriverByUsername(FavAreas.get(i).getDriverName());
+
+			 if(driver.isAvailable()){
+				driver.requestedRides.add(ride);
+			 }
+              
+
+			}
+			
+		}
+	}
+
+	public void unNotifyDrivers(Ride ride){
+		for(int i = 0 ; i< drivers.size();i++){
+			for(int j = 0 ; j <drivers.get(i).requestedRides.size();j++){
+				if(drivers.get(i).requestedRides.get(j).equals(ride)){
+					drivers.get(i).requestedRides.remove(j);
+				}
+			}
+			
+		}
 	}
 
 	public String suspend(String username) {
@@ -269,4 +301,5 @@ public class ArrayStorage implements Database {
 		}
 	}
 
+	
 }

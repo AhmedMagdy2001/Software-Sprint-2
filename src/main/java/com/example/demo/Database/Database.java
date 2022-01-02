@@ -23,6 +23,10 @@ public interface Database {
 
 	public String addDriver(Driver driver);
 
+	public void notifyAllDrivers(Ride ride);
+
+	public void unNotifyDrivers(Ride ride);
+
 	String login(LoginInput credintials);
 
 	public Passenger getPassengerByUsername(String username);
@@ -45,11 +49,11 @@ public interface Database {
 
 	public void listAllRides();
 
-	public void suggestRidePrice(String source, int price, String driverName);
+	public String suggestRidePrice(String source, int price, String driverName , String passengerName);
 
 	void listUsersRatings(Driver driver);
 
-	void checkDriverAvgRating(String driverName);
+	String checkDriverAvgRating(String driverName);
 
 	public String suspend(String username);
 
